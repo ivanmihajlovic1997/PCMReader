@@ -312,7 +312,7 @@ std::vector<BYTE>  AudioCapture::Capture() {
                     buffer = ConvertBitDepth(buffer, numFramesAvailable, m_pWaveFormat->wBitsPerSample, m_config.targetBitDepth, m_pWaveFormat->nChannels);
                 }
 
-                if (m_config.convertToMono || m_config.convertToStereo) {
+                if (m_pWaveFormat->nChannels != m_config.channels) {
                     buffer = ConvertChannels(buffer, numFramesAvailable, m_pWaveFormat->nChannels, m_config.channels, m_config.targetBitDepth);
                 }
 
