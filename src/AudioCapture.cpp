@@ -219,7 +219,7 @@ std::vector<BYTE> AudioCapture::ConvertBitDepth(std::vector<BYTE> vData, UINT32 
 
             switch (dstBitDepth) {
             case 8: {
-                int8_t outSample = static_cast<int8_t>(floatSample * 127.0f);
+                uint8_t outSample = static_cast<uint8_t>((floatSample + 1.0f) * 127.0f);
                 std::memcpy(outPtr, &outSample, 1);
                 break;
             }
@@ -244,7 +244,7 @@ std::vector<BYTE> AudioCapture::ConvertBitDepth(std::vector<BYTE> vData, UINT32 
         int32_t sample = 0;
         switch (srcBitDepth) {
         case 8:
-            sample = *reinterpret_cast<int8_t*>(inPtr);
+            sample = *reinterpret_cast<uint8_t*>(inPtr);
             sample <<= 24;
             break;
         case 16:
@@ -261,7 +261,7 @@ std::vector<BYTE> AudioCapture::ConvertBitDepth(std::vector<BYTE> vData, UINT32 
         
         switch (dstBitDepth) {
         case 8: {
-            int8_t outSample = static_cast<int8_t>(sample >> 24);
+            uint8_t outSample = static_cast<uint8_t>(sample >> 24) + 128;
             std::memcpy(outPtr, &outSample, 1);
             break;
         }
